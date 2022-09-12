@@ -3,9 +3,9 @@ package web;
 import java.io.IOException;
 import java.net.URI;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +29,7 @@ public class IndividualResource {
         if (null == fields)
             return Individual.listAll();
         List<?> l = Individual.list("SELECT " + fields + " FROM Individual");
-        List<Map<String, Object>> result = new LinkedList<>();// ArrayList doesn't exist
+        List<Map<String, Object>> result = new ArrayList<>();
         String[] f = fields.split(",");
         for (Object row : l) {
             Map<String, Object> r = new HashMap<>();
@@ -46,7 +46,7 @@ public class IndividualResource {
         if (null == fields)
             return Individual.findById(id);
         List<?> l = Individual.list("SELECT " + fields + " FROM Individual WHERE id = " + id);
-        List<Map<String, Object>> result = new LinkedList<>();// ArrayList doesn't exist
+        List<Map<String, Object>> result = new ArrayList<>();
         String[] f = fields.split(",");
         Map<String, Object> r = new HashMap<>();
         Object[] row = (Object[]) l.get(0);

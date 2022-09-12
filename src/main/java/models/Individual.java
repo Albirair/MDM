@@ -65,41 +65,4 @@ public class Individual extends PanacheEntity {
     @OneToMany(mappedBy = "individual", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "individual")
     public Set<Skill> skill;
-
-    // public Individual() {
-    // super();
-    // }
-
-    // public Individual(JsonObject individual) {
-    // super();
-
-    // }
-
-    // public void patch(Individual i) {
-    // aristoctraticTitle = i.aristoctraticTitle;
-    // birthDate = i.birthDate;
-    // countryOfBirth = i.countryOfBirth;
-    // deathDate = i.deathDate;
-    // familyName = i.familyName;
-    // familyNamePrefix = i.familyNamePrefix;
-    // formattedName = i.formattedName;
-    // fullName = i.fullName;
-    // gender = i.gender;
-    // generation = i.generation;
-    // givenName = i.givenName;
-    // legalName = i.legalName;
-    // location = i.location;
-    // maritalStatus = i.maritalStatus;
-    // middleName = i.middleName;
-    // nationality = i.nationality;
-    // placeOfBirth = i.placeOfBirth;
-    // preferredGivenName = i.preferredGivenName;
-    // title = i.title;
-    // status = i.status;
-    // }
-
-    @Override
-    public String toString() {
-        return "individual " + id + " is " + givenName + " " + familyName;
-    }
 }
