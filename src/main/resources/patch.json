@@ -1,0 +1,12 @@
+{
+	"location": "London",
+	"nationality": "British",
+	"skill": [
+		{
+			"code": "sk1",
+			"name": "pitching",
+			"comment": "convinced BoE governer"
+		}
+	],
+	"creditRating": null
+}
