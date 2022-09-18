@@ -11,7 +11,6 @@ public class OrganizationChildRelationship extends PanacheEntity {
     @JoinColumn
     @JsonBackReference(value = "organization")
     public Organization organizationRelationship;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(mappedBy = "organizationChildRelationship", cascade = CascadeType.ALL, orphanRemoval = true)
     public OrganizationRef organization;
 }

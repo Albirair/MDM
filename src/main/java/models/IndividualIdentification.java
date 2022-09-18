@@ -12,8 +12,7 @@ public class IndividualIdentification extends PanacheEntity {
     public String issuingAuthority;
     public Date validFrom;
     public Date validUntil;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(mappedBy = "individualIdentification", cascade = CascadeType.ALL, orphanRemoval = true)
     private AttachmentRefOrValue attachment;
     @ManyToOne
     @JoinColumn

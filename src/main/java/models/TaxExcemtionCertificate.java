@@ -10,8 +10,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 public class TaxExcemtionCertificate extends PanacheEntity {
     public Date validFrom;
     public Date validUntil;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(mappedBy = "taxExcemtionCertificate", cascade = CascadeType.ALL)
     public AttachmentRefOrValue attachment;
     @OneToMany(mappedBy = "taxExcemtionCertificate", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<TaxDefinition> taxDefinitions;

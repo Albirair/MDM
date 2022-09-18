@@ -13,8 +13,7 @@ public class OrganizationIdentification extends PanacheEntityBase {
     public String issuingAuthority;
     public Date validFrom;
     public Date validUntil;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(mappedBy = "organizationIdentification", cascade = CascadeType.ALL, orphanRemoval = true)
     private AttachmentRefOrValue attachment;
     @ManyToOne
     @JoinColumn

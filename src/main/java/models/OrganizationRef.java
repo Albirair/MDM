@@ -6,8 +6,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 public class OrganizationRef extends PanacheEntity {
     public String href;
     public String name;
-    @OneToOne(mappedBy = "organization")
+    @OneToOne
+    @JoinColumn
     private OrganizationChildRelationship organizationChildRelationship;
-    @OneToOne(mappedBy = "organization")
+    @OneToOne
+    @JoinColumn
     private OrganizationParentRelationship organizationParentRelationship;
 }

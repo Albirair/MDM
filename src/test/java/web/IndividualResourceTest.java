@@ -3,12 +3,9 @@ package web;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.vertx.core.json.JsonArray;
-
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
-
 import java.io.File;
-
 import javax.ws.rs.core.MediaType;
 
 @QuarkusTest

@@ -16,6 +16,7 @@ public class MediumCharachteristic extends PanacheEntity {
     public String stateOrProvince;
     public String street1;
     public String street2;
-    @OneToOne(mappedBy = "charachteristic")
+    @OneToOne
+    @JoinColumn
     private ContactMedium contactMedium;
 }

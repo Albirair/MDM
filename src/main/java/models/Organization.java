@@ -37,11 +37,10 @@ public class Organization extends PanacheEntity {
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "organization")
     public Set<RelatedParty> relatedParty;
-    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "organizationRelationship", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "organization")
     public Set<OrganizationChildRelationship> organizationChildRelationship;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(mappedBy = "organizationRelationship", cascade = CascadeType.ALL, orphanRemoval = true)
     public OrganizationParentRelationship organizationParentRelationship;
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "organization")

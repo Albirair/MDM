@@ -11,8 +11,7 @@ public class ContactMedium extends PanacheEntity {
     public boolean preferred;
     public Date validFrom;
     public Date validUntil;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToOne(mappedBy = "contactMedium", cascade = CascadeType.ALL, orphanRemoval = true)
     private MediumCharachteristic charachteristic;
     @ManyToOne
     @JoinColumn

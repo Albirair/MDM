@@ -17,10 +17,13 @@ public class AttachmentRefOrValue extends PanacheEntity {
     public float size;
     public Date validFrom;
     public Date validUntil;
-    @OneToOne(mappedBy = "attachment")
+    @OneToOne
+    @JoinColumn
     private TaxExcemtionCertificate taxExcemtionCertificate;
-    @OneToOne(mappedBy = "attachment")
+    @OneToOne
+    @JoinColumn
     private IndividualIdentification individualIdentification;
-    @OneToOne(mappedBy = "attachment")
+    @OneToOne
+    @JoinColumn
     private OrganizationIdentification organizationIdentification;
 }
