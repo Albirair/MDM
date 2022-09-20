@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import events.*;
 import models.*;
 
 @Path("/api/organization")
@@ -61,6 +62,7 @@ public class OrganizationResource {
     @Transactional
     public Response create(Organization o) {
         o.persist();
+        new OrganizationCreateEvent(o).publish();
         return Response.created(URI.create("/api/Organization/" + o.id)).entity(o).build();
     }
 
@@ -231,6 +233,7 @@ public class OrganizationResource {
             }
         }
         updated.persist();
+        new OrganizationAttributeValueChangeEvent(updated).publish();
         return updated;
     }
 
@@ -238,7 +241,11 @@ public class OrganizationResource {
     @Path("{id}")
     @Transactional
     public Response delete(@PathParam("id") long id) {
-        Organization.deleteById(id);
+        Organization o = Organization.findById(id);
+        if (null != o) {
+            new OrganizationDeleteEvent(o).publish();
+            o.delete();
+        }
         return Response.status(204).build();
     }
 }

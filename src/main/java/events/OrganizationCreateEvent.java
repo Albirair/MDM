@@ -1,6 +1,6 @@
 package events;
 
-import models.Individual;
+import models.Organization;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.*;
@@ -8,14 +8,14 @@ import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class IndividualCreateEvent extends Event {
+public class OrganizationCreateEvent extends Event {
     public static class Payload {
-        public Individual individual;
+        public Organization organization;
     }
 
-    private static class IndividualCreateEventSerializer implements Serializer<IndividualCreateEvent> {
+    private static class OrganizationCreateEventSerializer implements Serializer<OrganizationCreateEvent> {
         @Override
-        public byte[] serialize(String arg0, IndividualCreateEvent arg1) {
+        public byte[] serialize(String arg0, OrganizationCreateEvent arg1) {
             byte[] retVal = null;
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
@@ -28,27 +28,27 @@ public class IndividualCreateEvent extends Event {
         }
     }
 
-    private static Producer<String, IndividualCreateEvent> producer;
+    private static Producer<String, OrganizationCreateEvent> producer;
     static {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         producer = new KafkaProducer<>(properties, new StringSerializer(),
-                new IndividualCreateEventSerializer());
+                new OrganizationCreateEventSerializer());
     }
     public Payload event;
 
-    public IndividualCreateEvent() {
+    public OrganizationCreateEvent() {
         super();
         event = new Payload();
-        eventType = "IndividualCreateEvent";
+        eventType = "OrganizationCreateEvent";
     }
 
-    public IndividualCreateEvent(Individual i) {
+    public OrganizationCreateEvent(Organization i) {
         this();
-        event.individual = i;
+        event.organization = i;
     }
 
     synchronized public void publish() {
-        producer.send(new ProducerRecord<String, IndividualCreateEvent>("IndividualCreateEvent", this));
+        producer.send(new ProducerRecord<String, OrganizationCreateEvent>("OrganizationCreateEvent", this));
     }
 }

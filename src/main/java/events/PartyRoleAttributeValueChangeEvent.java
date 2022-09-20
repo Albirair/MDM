@@ -1,6 +1,6 @@
 package events;
 
-import models.Individual;
+import models.PartyRole;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.*;
@@ -8,14 +8,15 @@ import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class IndividualCreateEvent extends Event {
+public class PartyRoleAttributeValueChangeEvent extends Event {
     public static class Payload {
-        public Individual individual;
+        public PartyRole partyRole;
     }
 
-    private static class IndividualCreateEventSerializer implements Serializer<IndividualCreateEvent> {
+    private static class PartyRoleAttributeValueChangeEventSerializer
+            implements Serializer<PartyRoleAttributeValueChangeEvent> {
         @Override
-        public byte[] serialize(String arg0, IndividualCreateEvent arg1) {
+        public byte[] serialize(String arg0, PartyRoleAttributeValueChangeEvent arg1) {
             byte[] retVal = null;
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
@@ -28,27 +29,28 @@ public class IndividualCreateEvent extends Event {
         }
     }
 
-    private static Producer<String, IndividualCreateEvent> producer;
+    private static Producer<String, PartyRoleAttributeValueChangeEvent> producer;
     static {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         producer = new KafkaProducer<>(properties, new StringSerializer(),
-                new IndividualCreateEventSerializer());
+                new PartyRoleAttributeValueChangeEventSerializer());
     }
     public Payload event;
 
-    public IndividualCreateEvent() {
+    public PartyRoleAttributeValueChangeEvent() {
         super();
         event = new Payload();
-        eventType = "IndividualCreateEvent";
+        eventType = "PartyRoleAttributeValueChangeEvent";
     }
 
-    public IndividualCreateEvent(Individual i) {
+    public PartyRoleAttributeValueChangeEvent(PartyRole i) {
         this();
-        event.individual = i;
+        event.partyRole = i;
     }
 
     synchronized public void publish() {
-        producer.send(new ProducerRecord<String, IndividualCreateEvent>("IndividualCreateEvent", this));
+        producer.send(new ProducerRecord<String, PartyRoleAttributeValueChangeEvent>(
+                "PartyRoleAttributeValueChangeEvent", this));
     }
 }

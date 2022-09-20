@@ -8,14 +8,15 @@ import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class IndividualCreateEvent extends Event {
+public class IndividualAttributeValueChangeEvent extends Event {
     public static class Payload {
         public Individual individual;
     }
 
-    private static class IndividualCreateEventSerializer implements Serializer<IndividualCreateEvent> {
+    private static class IndividualAttributeValueChangeEventSerializer
+            implements Serializer<IndividualAttributeValueChangeEvent> {
         @Override
-        public byte[] serialize(String arg0, IndividualCreateEvent arg1) {
+        public byte[] serialize(String arg0, IndividualAttributeValueChangeEvent arg1) {
             byte[] retVal = null;
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
@@ -28,27 +29,28 @@ public class IndividualCreateEvent extends Event {
         }
     }
 
-    private static Producer<String, IndividualCreateEvent> producer;
+    private static Producer<String, IndividualAttributeValueChangeEvent> producer;
     static {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         producer = new KafkaProducer<>(properties, new StringSerializer(),
-                new IndividualCreateEventSerializer());
+                new IndividualAttributeValueChangeEventSerializer());
     }
     public Payload event;
 
-    public IndividualCreateEvent() {
+    public IndividualAttributeValueChangeEvent() {
         super();
         event = new Payload();
-        eventType = "IndividualCreateEvent";
+        eventType = "IndividualAttributeValueChangeEvent";
     }
 
-    public IndividualCreateEvent(Individual i) {
+    public IndividualAttributeValueChangeEvent(Individual i) {
         this();
         event.individual = i;
     }
 
     synchronized public void publish() {
-        producer.send(new ProducerRecord<String, IndividualCreateEvent>("IndividualCreateEvent", this));
+        producer.send(new ProducerRecord<String, IndividualAttributeValueChangeEvent>(
+                "IndividualAttributeValueChangeEvent", this));
     }
 }

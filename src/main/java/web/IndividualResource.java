@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import events.*;
 import models.*;
 
 @Path("/api/individual")
@@ -60,6 +61,7 @@ public class IndividualResource {
     @Transactional
     public Response create(Individual i) {
         i.persist();
+        new IndividualCreateEvent(i).publish();
         return Response.created(URI.create("/api/individual/" + i.id)).entity(i).build();
     }
 
@@ -282,6 +284,7 @@ public class IndividualResource {
             }
         }
         updated.persist();
+        new IndividualAttributeValueChangeEvent(updated).publish();
         return updated;
     }
 
@@ -289,7 +292,11 @@ public class IndividualResource {
     @Path("{id}")
     @Transactional
     public Response delete(@PathParam("id") long id) {
-        Individual.deleteById(id);
+        Individual i = Individual.findById(id);
+        if (null != i) {
+            new IndividualDeleteEvent(i).publish();
+            i.delete();
+        }
         return Response.status(204).build();
     }
 }

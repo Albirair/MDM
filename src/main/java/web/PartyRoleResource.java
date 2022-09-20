@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import events.*;
 import models.*;
 
 @Path("/api/role")
@@ -61,6 +62,7 @@ public class PartyRoleResource {
     @Transactional
     public Response create(PartyRole i) {
         i.persist();
+        new PartyRoleCreateEvent(i).publish();
         return Response.created(URI.create("/api/role/" + i.id)).build();
     }
 
@@ -98,7 +100,7 @@ public class PartyRoleResource {
                                     target.get("engageParty").traverse(), RelatedParty.class);
         if (resource.has("creditProfile")) {
             for (PartyCreditProfile creditProfile : updated.creditProfile)
-            creditProfile.delete();
+                creditProfile.delete();
             updated.creditProfile.clear();
             if (!resource.get("creditProfile").isNull()) {
                 updated.creditProfile.addAll(new ObjectMapper().readerFor(new TypeReference<Set<PartyCreditProfile>>() {
@@ -190,6 +192,7 @@ public class PartyRoleResource {
             }
         }
         updated.persist();
+        new PartyRoleAttributeValueChangeEvent(updated).publish();
         return updated;
     }
 
@@ -197,7 +200,11 @@ public class PartyRoleResource {
     @Path("{id}")
     @Transactional
     public Response delete(@PathParam("id") long id) {
-        PartyRole.deleteById(id);
+        PartyRole i = PartyRole.findById(id);
+        if (null != i) {
+            new PartyRoleDeleteEvent(i).publish();
+            i.delete();
+        }
         return Response.status(204).build();
     }
 }
