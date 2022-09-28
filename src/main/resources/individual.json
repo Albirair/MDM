@@ -1,0 +1,46 @@
+{
+	"aristoctraticTitle": "Albirair",
+	"birthDate": "1995-09-25",
+	"countryOfBirth": "Sudan",
+	"familyName": "Albirair",
+	"gender": "male",
+	"generation": "fourth",
+	"givenName": "Musab",
+	"location": "Omdurman",
+	"maritalStatus": "complicated",
+	"nationality": "Sudanese",
+	"placeOfBirth": "Sudan",
+	"title": "Professor",
+	"status": "validated",
+	"skill": [
+		{
+			"code": "sk1",
+			"name": "pitching",
+			"comment": "convinced BK CEO"
+		},
+		{
+			"code": "sk2",
+			"name": "sales",
+			"comment": "tripled the revenues"
+		}
+	],
+	"creditRating": [
+		{
+			"ratingScore": 0,
+			"validFrom": "0001-01-01",
+			"validUntil": "9999-12-31"
+		},
+		{
+			"ratingScore": 3,
+			"validFrom": "0001-01-01",
+			"validUntil": "9999-12-31",
+			"creditAgencyName": "Albirair Inc"
+		}
+	],
+	"disability": [
+		{
+			"code": "1",
+			"name": "depression"
+		}
+	]
+}
