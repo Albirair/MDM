@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import events.*;
-import models.*;
+import models.party.*;
 
 @Path("/api/organization")
 @Consumes(MediaType.APPLICATION_JSON)

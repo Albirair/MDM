@@ -1,12 +1,13 @@
 package events;
 
-import models.Organization;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import models.party.Organization;
 
 public class OrganizationAttributeValueChangeEvent extends Event {
     public static class Payload {

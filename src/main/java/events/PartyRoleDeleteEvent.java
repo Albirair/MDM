@@ -1,6 +1,6 @@
 package events;
 
-import models.PartyRole;
+import models.party.PartyRole;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.*;

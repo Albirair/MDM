@@ -1,4 +1,4 @@
-package models.Party;
+package models.party;
 
 import java.util.Date;
 import java.util.Set;

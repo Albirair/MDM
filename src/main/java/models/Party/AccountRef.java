@@ -1,4 +1,4 @@
-package models.Party;
+package models.party;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;

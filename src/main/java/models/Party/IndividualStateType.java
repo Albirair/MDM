@@ -1,4 +1,4 @@
-package models.Party;
+package models.party;
 
 public enum IndividualStateType {
     initialized, validated, deceased
