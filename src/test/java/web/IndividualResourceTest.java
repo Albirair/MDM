@@ -59,7 +59,8 @@ public class IndividualResourceTest {
                     .extract()
                     .asString();
             System.out.println("patched individual with id " + id + " and became\n" + result);
-        }
+        } else
+            System.out.println("no individual to patch");
     }
 
     @Test
