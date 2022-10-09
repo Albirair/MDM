@@ -62,7 +62,7 @@ public class OrganizationResource {
     @Transactional
     public Response create(Organization o) {
         o.persist();
-        new OrganizationCreateEvent(o).publish();
+        new Event<Organization>(o, Type.Create).publish();
         return Response.created(URI.create("/api/Organization/" + o.id)).entity(o).build();
     }
 
@@ -233,7 +233,7 @@ public class OrganizationResource {
             }
         }
         updated.persist();
-        new OrganizationAttributeValueChangeEvent(updated).publish();
+        new Event<Organization>(updated, Type.AttributeValueChange).publish();
         return updated;
     }
 
@@ -243,7 +243,7 @@ public class OrganizationResource {
     public Response delete(@PathParam("id") long id) {
         Organization o = Organization.findById(id);
         if (null != o) {
-            new OrganizationDeleteEvent(o).publish();
+            new Event<Organization>(o, Type.Delete).publish();
             o.delete();
         }
         return Response.status(204).build();

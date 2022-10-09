@@ -62,7 +62,7 @@ public class PartyRoleResource {
     @Transactional
     public Response create(PartyRole i) {
         i.persist();
-        new PartyRoleCreateEvent(i).publish();
+        new Event<PartyRole>(i, Type.Create).publish();
         return Response.created(URI.create("/api/role/" + i.id)).build();
     }
 
@@ -192,7 +192,7 @@ public class PartyRoleResource {
             }
         }
         updated.persist();
-        new PartyRoleAttributeValueChangeEvent(updated).publish();
+        new Event<PartyRole>(updated, Type.AttributeValueChange).publish();
         return updated;
     }
 
@@ -202,7 +202,7 @@ public class PartyRoleResource {
     public Response delete(@PathParam("id") long id) {
         PartyRole i = PartyRole.findById(id);
         if (null != i) {
-            new PartyRoleDeleteEvent(i).publish();
+            new Event<PartyRole>(i, Type.Delete).publish();
             i.delete();
         }
         return Response.status(204).build();
