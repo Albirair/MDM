@@ -5,9 +5,10 @@ import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import models.Patchable;
 
 @Entity
-public class Problem extends PanacheEntityBase{
+public class Problem extends PanacheEntityBase implements Patchable {
 
     @Id
     public int problem_id;
@@ -31,4 +32,13 @@ public class Problem extends PanacheEntityBase{
         this.comment = comment;
         this.related_item_id = related_item_id;
     }
+
+    @Override
+    public void setForeignKey(Object element)
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+            ((RCA) element).problem = this;
+        
+    }
+
+    
 }
