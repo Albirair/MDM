@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import models.HasIndividual;
+import models.ModelBase;
 import models.Patchable;
 
 @Entity
-public class Individual extends PanacheEntity implements Patchable {
+public class Individual extends ModelBase implements Patchable {
 	@Column(updatable = false)
 	private String href;
 	public String aristoctraticTitle;

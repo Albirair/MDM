@@ -2,15 +2,12 @@ package models.party;
 
 import java.util.Date;
 import java.util.Set;
-
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import models.ModelBase;
 
 @Entity
-public class PartyRole extends PanacheEntity {
+public class PartyRole extends ModelBase {
     @Column(updatable = false)
     public String href;
     @Column(nullable = false)

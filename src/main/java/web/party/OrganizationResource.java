@@ -1,13 +1,9 @@
 package web.party;
 
 import java.io.IOException;
-import java.net.URI;
 import java.sql.Date;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -20,50 +16,28 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import events.*;
 import models.party.*;
+import web.Resource;
 
 @Path("/api/organization")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class OrganizationResource {
+public class OrganizationResource extends Resource<Organization> {
 
     @GET
     public List<?> list(@QueryParam("fields") String fields) {
-        if (null == fields)
-            return Organization.listAll();
-        List<?> l = Organization.list("SELECT " + fields + " FROM Organization");
-        List<Map<String, Object>> result = new LinkedList<>();// ArrayList doesn't exist
-        String[] f = fields.split(",");
-        for (Object row : l) {
-            Map<String, Object> r = new HashMap<>();
-            for (int index = 0; index < f.length; ++index)
-                r.put(f[index], ((Object[]) row)[index]);
-            result.add(r);
-        }
-        return result;
+        return super.list(fields);
     }
 
     @GET
     @Path("{id}")
     public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) {
-        if (null == fields)
-            return Organization.findById(id);
-        List<?> l = Organization.list("SELECT " + fields + " FROM Organization WHERE id = " + id);
-        List<Map<String, Object>> result = new LinkedList<>();// ArrayList doesn't exist
-        String[] f = fields.split(",");
-        Map<String, Object> r = new HashMap<>();
-        Object[] row = (Object[]) l.get(0);
-        for (int index = 0; index < f.length; ++index)
-            r.put(f[index], row[index]);
-        result.add(r);
-        return r;
+        return super.retrieve(fields, id);
     }
 
     @POST
     @Transactional
     public Response create(Organization o) {
-        o.persist();
-        new Event<Organization>(o, Type.Create).publish();
-        return Response.created(URI.create("/api/Organization/" + o.id)).entity(o).build();
+        return super.create(o);
     }
 
     @PATCH
@@ -241,11 +215,11 @@ public class OrganizationResource {
     @Path("{id}")
     @Transactional
     public Response delete(@PathParam("id") long id) {
-        Organization o = Organization.findById(id);
-        if (null != o) {
-            new Event<Organization>(o, Type.Delete).publish();
-            o.delete();
-        }
-        return Response.status(204).build();
+        return super.delete(id);
+    }
+
+    @Override
+    public Class<?> getModel() {
+        return Organization.class;
     }
 }
