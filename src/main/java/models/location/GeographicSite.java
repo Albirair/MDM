@@ -1,11 +1,12 @@
 package models.location;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+// import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import models.ModelBase;
 import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-public class GeographicSite extends PanacheEntity{
+public class GeographicSite extends ModelBase {
 
     public String name;
     public String href;
@@ -41,7 +42,10 @@ public class GeographicSite extends PanacheEntity{
     public GeographicSite() {
     }
 
-    public GeographicSite( String name, String href, String code, String GBID, String ESID, Date on_air_date, String description, String status,Date baseType,String type, String schemaLocation, GeographicAddress GeoAdd_GeSite, SiteRelationship SiteRel_GeoSite, CalendarPeriod CalPeriod_GeoSite, GeographicLocation GeoLocat_GeoSite) {
+    public GeographicSite(String name, String href, String code, String GBID, String ESID, Date on_air_date,
+            String description, String status, Date baseType, String type, String schemaLocation,
+            GeographicAddress GeoAdd_GeSite, SiteRelationship SiteRel_GeoSite, CalendarPeriod CalPeriod_GeoSite,
+            GeographicLocation GeoLocat_GeoSite) {
 
         this.name = name;
         this.href = href;

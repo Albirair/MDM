@@ -1,10 +1,11 @@
 package models.location;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+// import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import models.ModelBase;
 import javax.persistence.*;
 
 @Entity
-public class GeographicLocation extends PanacheEntity{
+public class GeographicLocation extends ModelBase {
 
     public String href;
     public String name;
@@ -21,12 +22,11 @@ public class GeographicLocation extends PanacheEntity{
     @OneToOne(mappedBy = "GeographicLocation")
     public GeographicAddress GeographicAddress;
 
-
-
     public GeographicLocation() {
     }
 
-    public GeographicLocation( String href, String name, String geometryType,String accuracy, String spatialRef, GeographicPoint geometry,String type, String schemaLocation) {
+    public GeographicLocation(String href, String name, String geometryType, String accuracy, String spatialRef,
+            GeographicPoint geometry, String type, String schemaLocation) {
 
         this.href = href;
         this.name = name;

@@ -1,6 +1,7 @@
 package web.party;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.List;
@@ -217,6 +218,20 @@ public class OrganizationResource extends Resource<Organization> {
     public Response delete(@PathParam("id") long id) {
         return super.delete(id);
     }
+
+    @POST
+	@Path("hub")
+	@Transactional
+	public Response register(JsonNode j) throws MalformedURLException {
+		return super.register(j);
+	}
+
+	@DELETE
+	@Path("hub/{id}")
+	@Transactional
+	public Response unregister(@PathParam("id") long id) {
+		return super.unregister(id);
+	}
 
     @Override
     public Class<?> getModel() {

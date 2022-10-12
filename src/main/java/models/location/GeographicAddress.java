@@ -1,10 +1,11 @@
 package models.location;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+// import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import models.ModelBase;
 import javax.persistence.*;
 
 @Entity
-public class GeographicAddress extends PanacheEntity{
+public class GeographicAddress extends ModelBase{
 
     public String href;
     public String streetNr;
