@@ -1,18 +1,23 @@
 package web.location;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.text.ParseException;
 import java.util.List;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.github.fge.jsonpatch.JsonPatchException;
 import models.location.GeographicPoint;
 import web.Resource;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.ParseException;
+import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatchException;
+import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import events.*;
+
 
 @Path("api/GeographicPointResources")
 @Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +63,34 @@ public class GeographicPointResources extends Resource<GeographicPoint> {
     public Response delete(@PathParam("id") long id) {
         return super.delete(id);
     }
+    @PATCH
+    @Path("{id}")
+    @Transactional
+    public Object patch(@PathParam("id") long id, JsonNode resource)
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
+            ClassNotFoundException, JsonPatchException, IOException, ParseException {
+        GeographicPoint updated = GeographicPoint.findById(id);
+        if (null == updated)
+            return Response.status(Status.NOT_FOUND).build();
+        JsonMergePatch patch = JsonMergePatch.fromJson(resource);
+        JsonNode target = patch.apply(new ObjectMapper().readTree(
+                new ObjectMapper().writeValueAsString(updated)));
+        if (resource.has("x"))
+            updated.x = resource.get("x").isNull() ? null
+                    : target.get("x").asText();
+        if (resource.has("y"))
+            updated.y = resource.get("y").isNull() ? null
+                    : target.get("y").asText();
+        if (resource.has("z"))
+            updated.z = resource.get("z").isNull() ? null
+                    : target.get("z").asText();
+
+
+        updated.persist();
+        new Event<GeographicPoint>(updated, Type.AttributeValueChange).publish();
+        return updated;
+    }
+
 
     @POST
     @Path("hub")
@@ -78,11 +111,5 @@ public class GeographicPointResources extends Resource<GeographicPoint> {
         return GeographicPoint.class;
     }
 
-    @Override
-    public Object patch(long id, JsonNode resource)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-            ClassNotFoundException, JsonPatchException, IOException, ParseException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+  
 }

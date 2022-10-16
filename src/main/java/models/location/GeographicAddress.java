@@ -1,11 +1,11 @@
 package models.location;
-
 // import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import models.ModelBase;
+import models.Patchable;
 import javax.persistence.*;
 
 @Entity
-public class GeographicAddress extends ModelBase{
+public class GeographicAddress extends ModelBase implements Patchable{
 
     public String href;
     public String streetNr;
@@ -42,6 +42,12 @@ public class GeographicAddress extends ModelBase{
     @OneToOne
     @JoinColumn(name = "GeoAdd_BlockHay")
     public Block_Hay GeoAdd_BlockHay;
+
+    @Override
+    public void setForeignKey(Object element)
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+        
+    }
 
     // public GeographicAddress() {
     // }

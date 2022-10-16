@@ -13,6 +13,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jsonpatch.JsonPatchException;
 import models.location.GeographicAddress;
 import web.Resource;
+import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import events.*;
+
 
 @Path("api/geographicAddress")
 @Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +84,48 @@ public class GeographicAddressResouces extends Resource<GeographicAddress> {
         return super.register(j);
     }
 
+    @PATCH
+	@Path("{id}")
+	@Transactional
+	public Object patch(@PathParam("id") long id, JsonNode resource)
+	        throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
+			ClassNotFoundException, JsonPatchException, IOException, ParseException {
+		GeographicAddress updated = GeographicAddress.findById(id);
+		if (null == updated)
+			return Response.status(Status.NOT_FOUND).build();
+		JsonMergePatch patch = JsonMergePatch.fromJson(resource);
+		JsonNode target = patch.apply(new ObjectMapper().readTree(
+				new ObjectMapper().writeValueAsString(updated)));
+		if (resource.has("href"))
+			updated.href = resource.get("href").isNull() ? null
+					: target.get("href").asText();
+        if (resource.has("streetNr"))
+            updated.streetNr = resource.get("streetNr").isNull() ? null
+                    : target.get("streetNr").asText();
+        if (resource.has("streetNrSuffix"))
+            updated.streetNrSuffix = resource.get("streetNrSuffix").isNull() ? null
+                    : target.get("streetNrSuffix").asText();
+        if (resource.has("streetNrLast"))
+			updated.streetNrLast = resource.get("streetNrLast").isNull() ? null
+					: target.get("streetNrLast").asText();
+        if (resource.has("streetName"))
+            updated.streetName = resource.get("streetName").isNull() ? null
+                    : target.get("streetName").asText();
+        if (resource.has("streetType"))
+            updated.streetType = resource.get("streetType").isNull() ? null
+                    : target.get("streetType").asText();
+		if (resource.has("familyName"))
+			updated.streetSuffix = resource.get("streetSuffix").isNull() ? null
+					: target.get("streetSuffix").asText();
+		if (resource.has("familyNamePrefix"))
+			updated.postcode = resource.get("postcode").isNull() ? null
+					: target.get("postcode").asText();
+		
+        updated.persist();
+		new Event<GeographicAddress>(updated, Type.AttributeValueChange).publish();
+		return updated;
+	}
+
     @DELETE
     @Path("hub/{id}")
     @Transactional
@@ -91,11 +138,5 @@ public class GeographicAddressResouces extends Resource<GeographicAddress> {
         return GeographicAddress.class;
     }
 
-    @Override
-    public Object patch(long id, JsonNode resource)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-            ClassNotFoundException, JsonPatchException, IOException, ParseException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    
 }

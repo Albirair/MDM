@@ -13,6 +13,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jsonpatch.JsonPatchException;
 import models.location.GeographicLocation;
 import web.Resource;
+import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import events.*;
 
 @Path("api/GeographicLocationResouces")
 @Produces(MediaType.APPLICATION_JSON)
@@ -55,7 +59,44 @@ public class GeographicLocationResouces extends Resource<GeographicLocation> {
         geographicLocation.schemaLocation = model.schemaLocation;
         geographicLocation.persist();
         return Response.ok(geographicLocation).build();
+
     }
+
+    @PATCH
+	@Path("{id}")
+	@Transactional
+	public Object patch(@PathParam("id") long id, JsonNode resource)
+	        throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
+			ClassNotFoundException, JsonPatchException, IOException, ParseException {
+		GeographicLocation updated = GeographicLocation.findById(id);
+		if (null == updated)
+			return Response.status(Status.NOT_FOUND).build();
+		JsonMergePatch patch = JsonMergePatch.fromJson(resource);
+		JsonNode target = patch.apply(new ObjectMapper().readTree(
+				new ObjectMapper().writeValueAsString(updated)));
+		if (resource.has("href"))
+			updated.href = resource.get("href").isNull() ? null
+					: target.get("href").asText();
+        if (resource.has("name"))
+            updated.name = resource.get("name").isNull() ? null
+                    : target.get("name").asText();
+        if (resource.has("geometryType"))
+                updated.geometryType = resource.get("geometryType").isNull() ? null
+                        : target.get("geometryType").asText();
+        if (resource.has("accuracy"))
+                updated.accuracy = resource.get("accuracy").isNull() ? null
+                        : target.get("accuracy").asText();
+        if (resource.has("spatialRef"))
+            updated.spatialRef = resource.get("spatialRef").isNull() ? null
+                    : target.get("spatialRef").asText();
+        if (resource.has("type"))
+            updated.type = resource.get("type").isNull() ? null
+                    : target.get("type").asText();
+		
+        updated.persist();
+		new Event<GeographicLocation>(updated, Type.AttributeValueChange).publish();
+		return updated;
+	}
 
     @DELETE
     @Transactional
@@ -81,14 +122,6 @@ public class GeographicLocationResouces extends Resource<GeographicLocation> {
     @Override
     public Class<?> getModel() {
         return GeographicLocation.class;
-    }
-
-    @Override
-    public Object patch(long id, JsonNode resource)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-            ClassNotFoundException, JsonPatchException, IOException, ParseException {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }
