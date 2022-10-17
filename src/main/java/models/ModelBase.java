@@ -3,8 +3,23 @@ package models;
 import java.util.*;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
+/**
+ * The base class intended to be extended by persistent classes (models).
+ * It defines 2 methods for individual & bulk retrieval.
+ */
 public abstract class ModelBase extends PanacheEntity {
-	public static List<?> listRows(Class<?> mod, String fields) {
+	/**
+	 * Retrieves a list of rows from the database
+	 *
+	 * @param mod    class object representing the entity to retreive rows from
+	 * @param fields comma-seperated list of columns to read from database
+	 * @return List&#60;Map&#60;String, Object>> where each list element is a
+	 *         database row
+	 *         and the fields / columns are utilized as keys in the map. However,
+	 *         when {@code fields == null}
+	 *         it returns List&#60;ModelBase>
+	 */
+	public static List<?> retrieve(Class<?> mod, String fields) {
 		if (null == fields)
 			return listAll();
 		find(fields);
@@ -29,6 +44,16 @@ public abstract class ModelBase extends PanacheEntity {
 		return result;
 	}
 
+	/**
+	 * Retrieves a row from the database
+	 *
+	 * @param mod    class object representing the entity to retreive rows from
+	 * @param fields comma-seperated list of columns to read from database
+	 * @param id     id of the row / tuple to be retrieved
+	 * @return Map&#60String, value> where fields / columns are utilized as keys in
+	 *         the map.
+	 *         However, when {@code fields == null} it returns ModelBase
+	 */
 	public static Object retrieve(Class<?> mod, String fields, long id) {
 		if (null == fields)
 			return findById(id);
