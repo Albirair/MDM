@@ -3,10 +3,9 @@ package models.party;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import models.HasIndividual;
 
 @Entity
-public class Characteristic extends PanacheEntity implements HasIndividual {
+public class Characteristic extends PanacheEntity {
 	public String name;
 	public String valueType;
 	public String value;
@@ -22,9 +21,4 @@ public class Characteristic extends PanacheEntity implements HasIndividual {
 	@JoinColumn
 	@JsonBackReference(value = "partyRole")
 	public PartyRole partyRole;
-
-	@Override
-	public void setIndividual(Individual i) {
-		individual = i;
-	}
 }

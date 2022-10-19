@@ -8,15 +8,10 @@ import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import models.fault.RCA;
 import web.Resource;
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-import java.text.ParseException;
-import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
-import events.*;
 
 @Path("api/rca")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,7 +25,8 @@ public class RcaResources extends Resource<RCA> {
 
     @GET
     @Path("{id}")
-    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) {
+    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         return super.retrieve(fields, id);
     }
 
@@ -63,7 +59,8 @@ public class RcaResources extends Resource<RCA> {
     @DELETE
     @Transactional
     @Path("{id}")
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@PathParam("id") long id) throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException {
         return super.delete(id);
     }
 
@@ -71,38 +68,9 @@ public class RcaResources extends Resource<RCA> {
     @Path("{id}")
     @Transactional
     public Object patch(@PathParam("id") long id, JsonNode resource)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-            ClassNotFoundException, JsonPatchException, IOException, ParseException {
-        RCA updated = RCA.findById(id);
-        if (null == updated)
-            return Response.status(Status.NOT_FOUND).build();
-        JsonMergePatch patch = JsonMergePatch.fromJson(resource);
-        JsonNode target = patch.apply(new ObjectMapper().readTree(
-                new ObjectMapper().writeValueAsString(updated)));
-        /*
-         * if (resource.has("rca_id"))
-         * updated.rca_id = resource.get("rca_id").isNull() ? null
-         * : target.get("rca_id").asInt();
-         */
-        if (resource.has("name"))
-            updated.name = resource.get("name").isNull() ? null
-                    : target.get("name").asText();
-        if (resource.has("related_process_id"))
-            updated.related_process_id = resource.get("related_process_id").isNull() ? null
-                    : target.get("related_process_id").asInt();
-        if (resource.has("catogary"))
-            updated.catogary = resource.get("catogary").isNull() ? null
-                    : target.get("catogary").asText();
-        if (resource.has("level"))
-            updated.level = resource.get("level").isNull() ? null
-                    : target.get("level").asInt();
-        if (resource.has("parent_id"))
-            updated.parent_id = resource.get("parent_id").isNull() ? null
-                    : target.get("parent_id").asInt();
-
-        updated.persist();
-        new Event<RCA>(updated, Type.AttributeValueChange).publish();
-        return updated;
+            throws JsonProcessingException, NoSuchFieldException, SecurityException, NoSuchMethodException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+        return super.patch(id, resource);
     }
 
     @POST

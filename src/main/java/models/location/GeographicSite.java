@@ -4,10 +4,9 @@ package models.location;
 import models.ModelBase;
 import java.util.Date;
 import javax.persistence.*;
-import models.Patchable;
 
 @Entity
-public class GeographicSite extends ModelBase implements Patchable {
+public class GeographicSite extends ModelBase {
 
     public String name;
     public String href;
@@ -63,11 +62,5 @@ public class GeographicSite extends ModelBase implements Patchable {
         this.SiteRel_GeoSite = SiteRel_GeoSite;
         this.CalPeriod_GeoSite = CalPeriod_GeoSite;
         this.GeoLocat_GeoSite = GeoLocat_GeoSite;
-    }
-
-    @Override
-    public void setForeignKey(Object element)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        
     }
 }

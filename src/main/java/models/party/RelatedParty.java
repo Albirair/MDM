@@ -3,10 +3,9 @@ package models.party;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import models.HasIndividual;
 
 @Entity
-public class RelatedParty extends PanacheEntity implements HasIndividual {
+public class RelatedParty extends PanacheEntity {
 	public String href;
 	public String name;
 	public String role;
@@ -24,9 +23,4 @@ public class RelatedParty extends PanacheEntity implements HasIndividual {
 	public PartyRole partyRole;
 	@OneToOne(mappedBy = "engageParty")
 	private PartyRole engagedRole;
-
-	@Override
-	public void setIndividual(Individual i) {
-		individual = i;
-	}
 }

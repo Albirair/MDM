@@ -8,16 +8,10 @@ import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import models.fault.Problem;
 import web.Resource;
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-import java.text.ParseException;
-import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
-import events.*;
-import models.fault.*;
 
 @Path("api/problem")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +25,8 @@ public class ProblemResources extends Resource<Problem> {
 
     @GET
     @Path("{id}")
-    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) {
+    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         return super.retrieve(fields, id);
     }
 
@@ -62,7 +57,8 @@ public class ProblemResources extends Resource<Problem> {
     @DELETE
     @Transactional
     @Path("{id}")
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@PathParam("id") long id) throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException {
         return super.delete(id);
     }
 
@@ -70,32 +66,9 @@ public class ProblemResources extends Resource<Problem> {
     @Path("{id}")
     @Transactional
     public Object patch(@PathParam("id") long id, JsonNode resource)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-            ClassNotFoundException, JsonPatchException, IOException, ParseException {
-        Problem updated = Problem.findById(id);
-        if (null == updated)
-            return Response.status(Status.NOT_FOUND).build();
-        JsonMergePatch patch = JsonMergePatch.fromJson(resource);
-        JsonNode target = patch.apply(new ObjectMapper().readTree(
-                new ObjectMapper().writeValueAsString(updated)));
-        if (resource.has("name"))
-            updated.name = resource.get("name").isNull() ? null
-                    : target.get("name").asText();
-        if (resource.has("name"))
-            updated.name = resource.get("name").isNull() ? null
-                    : target.get("name").asText();
-        if (resource.has("description"))
-            updated.description = resource.get("description").isNull() ? null
-                    : target.get("description").asText();
-        if (resource.has("comment"))
-            updated.comment = resource.get("comment").isNull() ? null
-                    : target.get("comment").asText();
-
-        updated.patchCollection(updated.rca, "rca", resource, target, RCA.class);
-
-        updated.persist();
-        new Event<Problem>(updated, Type.AttributeValueChange).publish();
-        return updated;
+            throws JsonProcessingException, NoSuchFieldException, SecurityException, NoSuchMethodException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+        return super.patch(id, resource);
     }
 
     @POST

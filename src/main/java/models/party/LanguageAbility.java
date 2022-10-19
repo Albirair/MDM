@@ -4,10 +4,9 @@ import java.util.Date;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import models.HasIndividual;
 
 @Entity
-public class LanguageAbility extends PanacheEntity implements HasIndividual {
+public class LanguageAbility extends PanacheEntity {
 	public boolean isFavoriteLanguage;
 	public String languageCode;
 	public String languageName;
@@ -21,9 +20,4 @@ public class LanguageAbility extends PanacheEntity implements HasIndividual {
 	@JoinColumn
 	@JsonBackReference(value = "individual")
 	public Individual individual;
-
-	@Override
-	public void setIndividual(Individual i) {
-		individual = i;
-	}
 }

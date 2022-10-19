@@ -4,10 +4,9 @@ import java.util.Date;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import models.HasIndividual;
 
 @Entity
-public class OtherNameIndividual extends PanacheEntity implements HasIndividual {
+public class OtherNameIndividual extends PanacheEntity {
 	public String aristoctraticTitle;
 	public String familyName;
 	public String familyNamePrefix;
@@ -25,9 +24,4 @@ public class OtherNameIndividual extends PanacheEntity implements HasIndividual 
 	@JoinColumn
 	@JsonBackReference(value = "individual")
 	public Individual individual;
-
-	@Override
-	public void setIndividual(Individual i) {
-		individual = i;
-	}
 }

@@ -1,14 +1,14 @@
 package web;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.text.ParseException;
 import java.util.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.fge.jsonpatch.JsonPatchException;
 import events.Event;
 import events.Type;
 import models.ModelBase;
@@ -45,8 +45,14 @@ public abstract class Resource<Model extends ModelBase> {
 	 * @return Map&#60String, value> where fields / columns are utilized as keys in
 	 *         the map.
 	 *         However, when {@code fields == null} it returns ModelBase
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
-	public Object retrieve(String fields, long id) {
+	public Object retrieve(String fields, long id) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
 		return ModelBase.retrieve(getModel(), fields, id);
 	}
 
@@ -68,18 +74,33 @@ public abstract class Resource<Model extends ModelBase> {
 				.entity(inserted).build();
 	}
 
-	public abstract Object patch(long id, JsonNode resource)
-			throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-			ClassNotFoundException, JsonPatchException, IOException, ParseException;
+	public Object patch(long id, JsonNode resource)
+			throws JsonProcessingException, NoSuchFieldException, SecurityException, NoSuchMethodException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+		@SuppressWarnings("unchecked")
+		Model updated = (Model) getModel().getMethod("findById", Object.class).invoke(null, id);
+		if (null == updated)
+			return Response.status(Status.NOT_FOUND).build();
+		updated.patch(resource);
+		new Event<Model>(updated, Type.AttributeValueChange).publish();
+		return updated;
+	}
 
 	/**
 	 * Deletes row
 	 *
 	 * @param id id of row to be deleted
 	 * @return {@code javax.ws.rs.core.Response} with status code 204 (deleted)
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
-	public Response delete(long id) {
-		Model tuple = Model.findById(id);
+	public Response delete(long id) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException {
+		@SuppressWarnings("unchecked")
+		Model tuple = (Model) getModel().getMethod("findById", Object.class).invoke(null, id);
 		if (null != tuple) {
 			new Event<Model>(tuple, Type.Delete).publish();
 			tuple.delete();

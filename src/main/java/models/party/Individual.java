@@ -4,12 +4,10 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import models.HasIndividual;
 import models.ModelBase;
-import models.Patchable;
 
 @Entity
-public class Individual extends ModelBase implements Patchable {
+public class Individual extends ModelBase {
 	@Column(updatable = false)
 	private String href;
 	public String aristoctraticTitle;
@@ -67,10 +65,4 @@ public class Individual extends ModelBase implements Patchable {
 	@OneToMany(mappedBy = "individual", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference(value = "individual")
 	public Set<Skill> skill;
-
-	@Override
-	public void setForeignKey(Object element)
-			throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-		((HasIndividual) element).setIndividual(this);
-	}
 }
