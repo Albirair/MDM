@@ -1,7 +1,7 @@
 package models.resource;
 
 import java.util.Set;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 public class PhysicalConnector extends Hardware {
 	public int cableType;
