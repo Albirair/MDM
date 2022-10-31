@@ -1,5 +1,8 @@
 package models.resource;
 
-public class LogialResourceSpec {
+import javax.persistence.*;
+
+@Entity
+public class LogicalResourceSpec extends ResourceSpecification {
 
 }

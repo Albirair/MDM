@@ -12,6 +12,6 @@ public class Protocol extends ModelBase {
 	public int direction;
 	public int portRangeStart;
 	public int portRangeEnd;
-	@ManyToMany(mappedBy = "support")
+	@ManyToMany(mappedBy = "protocol")
 	public Set<LogicalDevice> support;
 }

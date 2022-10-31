@@ -2,10 +2,11 @@ package models.resource;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @IdClass(LogicalPhysicalResourceId.class)
 @Entity
-public class LogicalPhysicalResource {
+public class LogicalPhysicalResource extends PanacheEntityBase {
 	@Id
 	@ManyToOne
 	@JoinColumn

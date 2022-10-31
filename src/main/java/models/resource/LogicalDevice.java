@@ -5,6 +5,6 @@ import javax.persistence.*;
 
 @Entity
 public class LogicalDevice extends LogicalResource {
-	@ManyToMany(mappedBy = "support")
-	public Set<Protocol> support;
+	@ManyToMany
+	public Set<Protocol> protocol;
 }
