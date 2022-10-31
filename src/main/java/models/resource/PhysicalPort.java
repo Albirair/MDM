@@ -3,7 +3,8 @@ package models.resource;
 import java.util.Set;
 import javax.persistence.*;
 
-public class PhysicalPort {
+@Entity
+public class PhysicalPort extends ManagedHardware {
     public int duplexMode;
     public int ifType;
     public int portNumber;

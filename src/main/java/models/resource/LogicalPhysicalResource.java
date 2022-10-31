@@ -4,6 +4,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @IdClass(LogicalPhysicalResourceId.class)
+@Entity
 public class LogicalPhysicalResource {
 	@Id
 	@ManyToOne

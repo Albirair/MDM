@@ -4,6 +4,7 @@ import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+@Entity
 public class HolderComposite extends EquipmentHolder {
 	public String cableManagementStrategy;
 	public int mountingOptions;

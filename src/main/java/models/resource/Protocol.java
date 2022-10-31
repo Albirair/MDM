@@ -3,7 +3,10 @@ package models.resource;
 import java.util.Set;
 import javax.persistence.*;
 
-public class Protocol {
+import models.ModelBase;
+
+@Entity
+public class Protocol extends ModelBase {
 	public int currentPortNumber;
 	public boolean isEphemeral;
 	public int direction;

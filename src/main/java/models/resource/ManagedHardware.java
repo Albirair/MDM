@@ -1,5 +1,8 @@
 package models.resource;
 
+import javax.persistence.*;
+
+@Entity
 public class ManagedHardware extends Hardware {
 	public String additionInfo;
 	public int administrativeState;

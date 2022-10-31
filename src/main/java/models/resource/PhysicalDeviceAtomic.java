@@ -1,5 +1,8 @@
 package models.resource;
 
-public class PhysicalDeviceAtomic {
+import javax.persistence.*;
+
+@Entity
+public class PhysicalDeviceAtomic extends PhysicalDevice {
 
 }

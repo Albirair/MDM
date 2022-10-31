@@ -4,6 +4,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import models.ModelBase;
 
+@Entity
 public class Resource extends ModelBase {
 	@ManyToOne
 	@JoinColumn

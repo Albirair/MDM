@@ -4,6 +4,7 @@ import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+@Entity
 public class PhysicalResource extends Resource {
 	public String manufactureDate;
 	public String otherIdentifier;

@@ -4,7 +4,8 @@ import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-public class PhysicalDeviceComposite {
+@Entity
+public class PhysicalDeviceComposite extends PhysicalDevice {
 	@OneToMany(mappedBy = "physicalDeviceComposite", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("physicalDeviceComposite")
 	public Set<PhysicalDevice> has;

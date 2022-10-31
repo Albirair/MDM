@@ -3,6 +3,7 @@ package models.resource;
 import java.util.Set;
 import javax.persistence.*;
 
+@Entity
 public class PhysicalConnector extends Hardware {
 	public int cableType;
 	public int gender;
