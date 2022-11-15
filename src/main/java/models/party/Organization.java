@@ -1,9 +1,11 @@
 package models.party;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import models.ModelBase;
 
 @Entity
@@ -50,15 +52,13 @@ public class Organization extends ModelBase {
     @JsonManagedReference(value = "organization")
     public Set<TaxExcemtionCertificate> taxExcemtionCertificate;
 
-    public void patch(Organization o) {
-        isHeadOffice = o.isHeadOffice;
-        isLegalEntity = o.isLegalEntity;
-        name = o.name;
-        nameType = o.nameType;
-        type = o.type;
-        tradingName = o.tradingName;
-        existsSince = o.existsSince;
-        existsUntil = o.existsUntil;
-        status = o.status;
+    @Override
+    protected void fixForeignKey(PanacheEntity element) throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException {
+        if (element instanceof OrganizationChildRelationship)
+            element.getClass().getMethod("setOrganizationRelationship", Organization.class)
+                    .invoke(element, this);
+        else
+            super.fixForeignKey(element);
     }
 }

@@ -1,23 +1,17 @@
-// package web.problem;
+package web.problem;
 
-// import java.util.List;
-// import javax.transaction.Transactional;
-// import javax.ws.rs.*;
-// import javax.ws.rs.core.Response;
-// import javax.ws.rs.core.*;
-// import org.jboss.resteasy.annotations.jaxrs.PathParam;
-// import models.fault.Problem;
-// import web.Resource;
-// import java.io.IOException;
-// import java.net.MalformedURLException;
-// import java.text.ParseException;
-// import javax.ws.rs.core.Response.Status;
-// import com.fasterxml.jackson.databind.JsonNode;
-// import com.fasterxml.jackson.databind.ObjectMapper;
-// import com.github.fge.jsonpatch.JsonPatchException;
-// import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
-// import events.*;
-// import models.fault.*;
+import java.util.List;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
+import models.fault.Problem;
+import web.Resource;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 
 // @Path("api/problem")
 // @Produces(MediaType.APPLICATION_JSON)
@@ -29,11 +23,12 @@
 //         return super.list(fields);
 //     }
 
-//     @GET
-//     @Path("{id}")
-//     public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) {
-//         return super.retrieve(fields, id);
-//     }
+    @GET
+    @Path("{id}")
+    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        return super.retrieve(fields, id);
+    }
 
 //     @POST
 //     @Transactional
@@ -59,44 +54,22 @@
 //         return Response.ok(problem).build();
 //     }
 
-//     @DELETE
-//     @Transactional
-//     @Path("{id}")
-//     public Response delete(@PathParam("id") long id) {
-//         return super.delete(id);
-//     }
+    @DELETE
+    @Transactional
+    @Path("{id}")
+    public Response delete(@PathParam("id") long id) throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException {
+        return super.delete(id);
+    }
 
-//     @PATCH
-//     @Path("{id}")
-//     @Transactional
-//     public Object patch(@PathParam("id") long id, JsonNode resource)
-//             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-//             ClassNotFoundException, JsonPatchException, IOException, ParseException {
-//         Problem updated = Problem.findById(id);
-//         if (null == updated)
-//             return Response.status(Status.NOT_FOUND).build();
-//         JsonMergePatch patch = JsonMergePatch.fromJson(resource);
-//         JsonNode target = patch.apply(new ObjectMapper().readTree(
-//                 new ObjectMapper().writeValueAsString(updated)));
-//         if (resource.has("name"))
-//             updated.name = resource.get("name").isNull() ? null
-//                     : target.get("name").asText();
-//         if (resource.has("name"))
-//             updated.name = resource.get("name").isNull() ? null
-//                     : target.get("name").asText();
-//         if (resource.has("description"))
-//             updated.description = resource.get("description").isNull() ? null
-//                     : target.get("description").asText();
-//         if (resource.has("comment"))
-//             updated.comment = resource.get("comment").isNull() ? null
-//                     : target.get("comment").asText();
-
-//         updated.patchCollection(updated.rca, "rca", resource, target, RCA.class);
-
-//         updated.persist();
-//         new Event<Problem>(updated, Type.AttributeValueChange).publish();
-//         return updated;
-//     }
+    @PATCH
+    @Path("{id}")
+    @Transactional
+    public Object patch(@PathParam("id") long id, JsonNode resource)
+            throws JsonProcessingException, NoSuchFieldException, SecurityException, NoSuchMethodException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+        return super.patch(id, resource);
+    }
 
 //     @POST
 //     @Path("hub")

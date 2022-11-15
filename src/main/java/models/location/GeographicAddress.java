@@ -1,11 +1,10 @@
 package models.location;
 // import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import models.ModelBase;
-import models.Patchable;
 import javax.persistence.*;
 
 @Entity
-public class GeographicAddress extends ModelBase implements Patchable{
+public class GeographicAddress extends ModelBase {
 
     public String href;
     public String streetNr;
@@ -42,33 +41,4 @@ public class GeographicAddress extends ModelBase implements Patchable{
     @OneToOne
     @JoinColumn(name = "GeoAdd_BlockHay")
     public Block_Hay GeoAdd_BlockHay;
-
-    @Override
-    public void setForeignKey(Object element)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        
-    }
-
-    // public GeographicAddress() {
-    // }
-
-    // public GeographicAddress( String href, String streetNr, String streetNrSuffix, String streetNrLast, String streetName, String streetType, String streetSuffix, String postcode,City GeAdd_city,GeographicSubAddress GeographicSubAddress, Continent GeoAdd_Continent, Country GeoAdd_Country, State GeoAdd_State, Locality GeoAdd_Locality, Block_Hay GeoAdd_BlockHay) {
-
-    //     this.href = href;
-    //     this.streetNr = streetNr;
-    //     this.streetNrSuffix = streetNrSuffix;
-    //     this.streetNrLast = streetNrLast;
-    //     this.streetName = streetName;
-    //     this.streetType = streetType;
-    //     this.streetType = streetNrSuffix;
-    //     this.streetType = streetType;
-    //     this.postcode = postcode;
-    //     this.GeAdd_city = GeAdd_city;
-    //     this.GeographicSubAddress = GeographicSubAddress;
-    //     this.GeoAdd_Continent = GeoAdd_Continent;
-    //     this.GeoAdd_Country = GeoAdd_Country;
-    //     this.GeoAdd_State = GeoAdd_State;
-    //     this.GeoAdd_Locality = GeoAdd_Locality;
-    //     this.GeoAdd_BlockHay = GeoAdd_BlockHay;
-    // }
 }

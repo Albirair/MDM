@@ -4,10 +4,9 @@ import java.util.Date;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import models.HasIndividual;
 
 @Entity
-public class ContactMedium extends PanacheEntity implements HasIndividual {
+public class ContactMedium extends PanacheEntity {
 	public String type;
 	public boolean preferred;
 	public Date validFrom;
@@ -26,9 +25,4 @@ public class ContactMedium extends PanacheEntity implements HasIndividual {
 	@JoinColumn
 	@JsonBackReference(value = "partyRole")
 	public PartyRole partyRole;
-
-	@Override
-	public void setIndividual(Individual i) {
-		individual = i;
-	}
 }

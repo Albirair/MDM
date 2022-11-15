@@ -8,16 +8,10 @@ import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import models.location.GeographicPoint;
 import web.Resource;
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-import java.text.ParseException;
-import javax.ws.rs.core.Response.Status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
-import events.*;
-
 
 @Path("api/GeographicPointResources")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +25,8 @@ public class GeographicPointResources extends Resource<GeographicPoint> {
 
     @GET
     @Path("{id}")
-    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) {
+    public Object retrieve(@QueryParam("fields") String fields, @PathParam("id") long id) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         return super.retrieve(fields, id);
     }
 
@@ -60,37 +55,19 @@ public class GeographicPointResources extends Resource<GeographicPoint> {
     @DELETE
     @Transactional
     @Path("{id}")
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@PathParam("id") long id) throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException {
         return super.delete(id);
     }
+
     @PATCH
     @Path("{id}")
     @Transactional
     public Object patch(@PathParam("id") long id, JsonNode resource)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-            ClassNotFoundException, JsonPatchException, IOException, ParseException {
-        GeographicPoint updated = GeographicPoint.findById(id);
-        if (null == updated)
-            return Response.status(Status.NOT_FOUND).build();
-        JsonMergePatch patch = JsonMergePatch.fromJson(resource);
-        JsonNode target = patch.apply(new ObjectMapper().readTree(
-                new ObjectMapper().writeValueAsString(updated)));
-        if (resource.has("x"))
-            updated.x = resource.get("x").isNull() ? null
-                    : target.get("x").asText();
-        if (resource.has("y"))
-            updated.y = resource.get("y").isNull() ? null
-                    : target.get("y").asText();
-        if (resource.has("z"))
-            updated.z = resource.get("z").isNull() ? null
-                    : target.get("z").asText();
-
-
-        updated.persist();
-        new Event<GeographicPoint>(updated, Type.AttributeValueChange).publish();
-        return updated;
+            throws JsonProcessingException, NoSuchFieldException, SecurityException, NoSuchMethodException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+        return super.patch(id, resource);
     }
-
 
     @POST
     @Path("hub")
@@ -111,5 +88,4 @@ public class GeographicPointResources extends Resource<GeographicPoint> {
         return GeographicPoint.class;
     }
 
-  
 }

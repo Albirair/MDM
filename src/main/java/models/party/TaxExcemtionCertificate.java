@@ -5,10 +5,9 @@ import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import models.HasIndividual;
 
 @Entity
-public class TaxExcemtionCertificate extends PanacheEntity implements HasIndividual {
+public class TaxExcemtionCertificate extends PanacheEntity {
 	public Date validFrom;
 	public Date validUntil;
 	@OneToOne(mappedBy = "taxExcemtionCertificate", cascade = CascadeType.ALL)
@@ -23,9 +22,4 @@ public class TaxExcemtionCertificate extends PanacheEntity implements HasIndivid
 	@JoinColumn
 	@JsonBackReference(value = "organization")
 	public Organization organization;
-
-	@Override
-	public void setIndividual(Individual i) {
-		individual = i;
-	}
 }

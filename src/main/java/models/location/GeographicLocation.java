@@ -1,15 +1,11 @@
 package models.location;
 
-// import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import models.ModelBase;
 import javax.persistence.*;
 import javax.persistence.Entity;
-// import com.fasterxml.jackson.annotation.JsonManagedReference;
-// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import models.Patchable;
 
 @Entity
-public class GeographicLocation extends ModelBase implements Patchable{
+public class GeographicLocation extends ModelBase {
 
     public String href;
     public String name;
@@ -40,11 +36,5 @@ public class GeographicLocation extends ModelBase implements Patchable{
         this.geometry = geometry;
         this.type = type;
         this.schemaLocation = schemaLocation;
-    }
-
-    @Override
-    public void setForeignKey(Object element)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        
     }
 }

@@ -1,4 +1,4 @@
-package web.party;
+package web.resource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -8,14 +8,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.party.*;
-import web.Resource;
+import models.resource.Resource;
 
-@Path("/api/role")
+@Path("/api/resource")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class PartyRoleResource extends Resource<PartyRole> {
-
+public class ResourceResource extends web.Resource<Resource> {
     @GET
     public List<?> list(@QueryParam("fields") String fields) {
         return super.list(fields);
@@ -30,8 +28,8 @@ public class PartyRoleResource extends Resource<PartyRole> {
 
     @POST
     @Transactional
-    public Response create(PartyRole i) {
-        return super.create(i);
+    public Response create(Resource r) {
+        return super.create(r);
     }
 
     @PATCH
@@ -67,6 +65,6 @@ public class PartyRoleResource extends Resource<PartyRole> {
 
     @Override
     public Class<?> getModel() {
-        return PartyRole.class;
+        return Resource.class;
     }
 }
