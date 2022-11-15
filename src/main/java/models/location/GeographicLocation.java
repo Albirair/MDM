@@ -4,7 +4,7 @@ package models.location;
 import models.ModelBase;
 import javax.persistence.*;
 import javax.persistence.Entity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+// import com.fasterxml.jackson.annotation.JsonManagedReference;
 // import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import models.Patchable;
 

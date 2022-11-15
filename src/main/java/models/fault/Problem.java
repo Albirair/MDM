@@ -4,23 +4,22 @@ import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import models.ModelBase;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import models.Patchable;
 
 @Entity
-public class Problem extends ModelBase implements Patchable {
+public class Problem extends PanacheEntityBase implements Patchable {
 
-    /* @Id
-    public int problem_id; */
+    @Id
+    public int problem_id; 
     public String name;
     public String description;
     public String comment;
     public int related_item_id;
     // Primary Key:
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference(value = "rca")
-    public Set<RCA> rca;
+    @JsonManagedReference(value = "related_rca_family")
+    public Set<RCA_Family> related_rca_family;
 
     public Problem() {
     }
@@ -37,7 +36,7 @@ public class Problem extends ModelBase implements Patchable {
     @Override
     public void setForeignKey(Object element)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-            ((RCA) element).problem = this;
+            ((RCA_Family) element).problem = this;
 
     }
 
