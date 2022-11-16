@@ -1,4 +1,4 @@
-// package web.problem;
+package web.problem;
 
 import java.util.List;
 import javax.transaction.Transactional;
@@ -6,22 +6,22 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
-import models.fault.RCA;
+import models.fault.RCA_Class;
 import web.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-// @Path("api/rca")
-// @Produces(MediaType.APPLICATION_JSON)
-// @Consumes(MediaType.APPLICATION_JSON)
-// public class RcaResources extends Resource<RCA> {
+@Path("api/rca")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class RcaResources extends Resource<RCA_Class> {
 
-//     @GET
-//     public List<?> list(@QueryParam("fields") String fields) {
-//         return super.list(fields);
-//     }
+    @GET
+    public List<?> list(@QueryParam("fields") String fields) {
+        return super.list(fields);
+    }
 
     @GET
     @Path("{id}")
@@ -73,23 +73,23 @@ import com.fasterxml.jackson.databind.JsonNode;
         return super.patch(id, resource);
     }
 
-//     @POST
-//     @Path("hub")
-//     @Transactional
-//     public Response register(JsonNode j) throws MalformedURLException {
-//         return super.register(j);
-//     }
+    @POST
+    @Path("hub")
+    @Transactional
+    public Response register(JsonNode j) throws MalformedURLException {
+        return super.register(j);
+    }
 
-//     @DELETE
-//     @Path("hub/{id}")
-//     @Transactional
-//     public Response unregister(@PathParam("id") long id) {
-//         return super.unregister(id);
-//     }
+    @DELETE
+    @Path("hub/{id}")
+    @Transactional
+    public Response unregister(@PathParam("id") long id) {
+        return super.unregister(id);
+    }
 
-//     @Override
-//     public Class<?> getModel() {
-//         return RCA.class;
-//     }
+    @Override
+    public Class<?> getModel() {
+        return RCA_Class.class;
+    }
 
-// }
+}
