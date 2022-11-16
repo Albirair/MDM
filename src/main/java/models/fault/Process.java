@@ -1,7 +1,6 @@
 package models.fault;
 
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
@@ -32,10 +31,10 @@ public class Process extends PanacheEntityBase{
     @ManyToOne
     @JsonBackReference(value = "Related_ProcessActivity")
     public Process_Activity Related_ProcessActivity;
-    
 
 
-    
+
+
 
     public Process() {
     }
@@ -48,7 +47,7 @@ public class Process extends PanacheEntityBase{
         this.Related_ProcessActivity = Related_ProcessActivity;
         // this.related_Process_app = related_Process_app;
         // this.Related_ProcessCatogary = Related_ProcessCatogary;
-        
+
     }
 
 }

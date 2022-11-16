@@ -4,14 +4,13 @@ import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import models.ModelBase;
+import models.ModelBaseWithoutId;
 
 @Entity
-public class Problem extends PanacheEntityBase {
+public class Problem extends ModelBaseWithoutId {
 
     @Id
-    public int problem_id; 
+    public long problem_id;
     public String name;
     public String description;
     public String comment;
@@ -31,5 +30,10 @@ public class Problem extends PanacheEntityBase {
         this.description = description;
         this.comment = comment;
         this.related_item_id = related_item_id;
+    }
+
+    @Override
+    public long getId() {
+        return problem_id;
     }
 }

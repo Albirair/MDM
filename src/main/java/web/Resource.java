@@ -11,19 +11,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import events.Event;
 import events.Type;
-import models.ModelBase;
+import models.ModelBaseWithoutId;
 import models.Subscription;
 
 /**
- * Abstract generic class to be extended by classes with {@code ModelBase}
+ * Abstract generic class to be extended by classes with
+ * {@code ModelBaseWithoutId}
  * specialization to
  * expose endpoints for CRUD operations
  */
-public abstract class Resource<Model extends ModelBase> {
+public abstract class Resource<Model extends ModelBaseWithoutId> {
 	/**
 	 * Utility method necessary to disambiguate database operations
 	 *
-	 * @return Class object model which extends {@code ModelBase}
+	 * @return Class object model which extends {@code ModelBaseWithoutId}
 	 */
 	public abstract Class<?> getModel();
 
@@ -33,10 +34,10 @@ public abstract class Resource<Model extends ModelBase> {
 	 *         database row
 	 *         and the fields / columns are utilized as keys in the map. However,
 	 *         when {@code fields == null}
-	 *         it returns List&#60;ModelBase>
+	 *         it returns List&#60;ModelBaseWithoutId>
 	 */
 	public List<?> list(String fields) {
-		return ModelBase.retrieve(getModel(), fields);
+		return ModelBaseWithoutId.retrieve(getModel(), fields);
 	}
 
 	/**
@@ -44,7 +45,7 @@ public abstract class Resource<Model extends ModelBase> {
 	 * @param id     id of the row / tuple to be retrieved
 	 * @return Map&#60String, value> where fields / columns are utilized as keys in
 	 *         the map.
-	 *         However, when {@code fields == null} it returns ModelBase
+	 *         However, when {@code fields == null} it returns ModelBaseWithoutId
 	 * @throws SecurityException
 	 * @throws NoSuchMethodException
 	 * @throws InvocationTargetException
@@ -53,7 +54,7 @@ public abstract class Resource<Model extends ModelBase> {
 	 */
 	public Object retrieve(String fields, long id) throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException {
-		return ModelBase.retrieve(getModel(), fields, id);
+		return ModelBaseWithoutId.retrieve(getModel(), fields, id);
 	}
 
 	/**
@@ -70,7 +71,8 @@ public abstract class Resource<Model extends ModelBase> {
 		return Response
 				.created(URI.create(
 						String.format("%s/%d",
-								getClass().getSuperclass().getAnnotation(Path.class).value(), inserted.id)))
+								getClass().getSuperclass().getAnnotation(Path.class).value(),
+								inserted.getId())))
 				.entity(inserted).build();
 	}
 

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import models.ModelBase;
 
 @Entity
@@ -53,7 +53,7 @@ public class Organization extends ModelBase {
     public Set<TaxExcemtionCertificate> taxExcemtionCertificate;
 
     @Override
-    protected void fixForeignKey(PanacheEntity element) throws IllegalAccessException, IllegalArgumentException,
+    protected void fixForeignKey(PanacheEntityBase element) throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException {
         if (element instanceof OrganizationChildRelationship)
             element.getClass().getMethod("setOrganizationRelationship", Organization.class)
