@@ -31,7 +31,6 @@ public class RCA_Item extends PanacheEntityBase{
         this.name = name;
         this.description = description;
         this.catogary = catogary;
-        this.catogary = catogary;
         this.level = level;
         this.ItemClass_id = ItemClass_id;
         this.related_process_id = related_process_id;

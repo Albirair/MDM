@@ -4,11 +4,11 @@ import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import models.ModelBase;
 
 @Entity
-public class Problem extends ModelBase {
+public class Problem extends PanacheEntityBase {
 
     @Id
     public int problem_id; 

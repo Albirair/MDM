@@ -13,15 +13,15 @@ import java.net.MalformedURLException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-// @Path("api/problem")
-// @Produces(MediaType.APPLICATION_JSON)
-// @Consumes(MediaType.APPLICATION_JSON)
-// public class ProblemResources extends Resource<Problem> {
+@Path("api/problem")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class ProblemResources extends Resource<Problem> {
 
-//     @GET
-//     public List<?> list(@QueryParam("fields") String fields) {
-//         return super.list(fields);
-//     }
+    @GET
+    public List<?> list(@QueryParam("fields") String fields) {
+        return super.list(fields);
+    }
 
     @GET
     @Path("{id}")
@@ -30,29 +30,29 @@ import com.fasterxml.jackson.databind.JsonNode;
         return super.retrieve(fields, id);
     }
 
-//     @POST
-//     @Transactional
-//     public Response create(Problem m) {
-//         return super.create(m);
-//     }
+    @POST
+    @Transactional
+    public Response create(Problem m) {
+        return super.create(m);
+    }
 
-//     @PUT
-//     @Transactional
-//     @Path("{id}")
-//     public Response update(@PathParam int id, Problem model) {
+    @PUT
+    @Transactional
+    @Path("{id}")
+    public Response update(@PathParam int id, Problem model) {
 
-//         Problem problem = Problem.findById(id);
-//         if (problem == null) {
-//             throw new WebApplicationException("Problem with this Id doesn't exsist! ", 404);
-//         }
-//         // problem.problem_id = model.problem_id;
-//         problem.name = model.name;
-//         problem.description = model.description;
-//         problem.comment = model.comment;
-//         problem.related_item_id = model.related_item_id;
-//         problem.persist();
-//         return Response.ok(problem).build();
-//     }
+        Problem problem = Problem.findById(id);
+        if (problem == null) {
+            throw new WebApplicationException("Problem with this Id doesn't exsist! ", 404);
+        }
+        // problem.problem_id = model.problem_id;
+        problem.name = model.name;
+        problem.description = model.description;
+        problem.comment = model.comment;
+        problem.related_item_id = model.related_item_id;
+        problem.persist();
+        return Response.ok(problem).build();
+    }
 
     @DELETE
     @Transactional
@@ -71,22 +71,22 @@ import com.fasterxml.jackson.databind.JsonNode;
         return super.patch(id, resource);
     }
 
-//     @POST
-//     @Path("hub")
-//     @Transactional
-//     public Response register(JsonNode j) throws MalformedURLException {
-//         return super.register(j);
-//     }
+    @POST
+    @Path("hub")
+    @Transactional
+    public Response register(JsonNode j) throws MalformedURLException {
+        return super.register(j);
+    }
 
-//     @DELETE
-//     @Path("hub/{id}")
-//     @Transactional
-//     public Response unregister(@PathParam("id") long id) {
-//         return super.unregister(id);
-//     }
+    @DELETE
+    @Path("hub/{id}")
+    @Transactional
+    public Response unregister(@PathParam("id") long id) {
+        return super.unregister(id);
+    }
 
-//     @Override
-//     public Class<?> getModel() {
-//         return Problem.class;
-//     }
-// }
+    @Override
+    public Class<?> getModel() {
+        return Problem.class;
+    }
+}
