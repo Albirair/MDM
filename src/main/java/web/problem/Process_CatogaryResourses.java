@@ -6,17 +6,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
-import models.fault.RCA_Item;
+import models.fault.Process_Catogary;
 import web.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-@Path("api/RCA_Item")
+@Path("api/Process")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RCA_ItemResources extends Resource<RCA_Item> {
+public class Process_CatogaryResourses extends Resource<Process_Catogary> {
 
     @GET
     public List<?> list(@QueryParam("fields") String fields) {
@@ -32,28 +32,25 @@ public class RCA_ItemResources extends Resource<RCA_Item> {
 
     @POST
     @Transactional
-    public Response create(RCA_Item m) {
+    public Response create(Process_Catogary m) {
         return super.create(m);
     }
 
     @PUT
     @Transactional
     @Path("{id}")
-    public Response update(@PathParam int id, RCA_Item model) {
+    public Response update(@PathParam int id, Process_Catogary model) {
 
-        RCA_Item rca_item = RCA_Item.findById(id);
-        if (rca_item == null) {
+        Process_Catogary process_catogary = Process_Catogary.findById(id);
+        if (process_catogary == null) {
             throw new WebApplicationException("RCA Item with this Id doesn't exsist! ", 404);
         }
         // rca.rca_id = model.rca_id;
-        rca_item.name = model.name;
-        rca_item.description = model.description;
-        rca_item.catogary = model.catogary;
-        rca_item.level = model.level;
-        rca_item.ItemClass_id = model.ItemClass_id;
-        rca_item.related_process_id = model.related_process_id;
-        rca_item.persist();
-        return Response.ok(rca_item).build();
+        process_catogary.name = model.name;
+        process_catogary.description = model.description;
+        process_catogary.related_CatogaryApp = model.related_CatogaryApp;
+        process_catogary.persist();
+        return Response.ok(process_catogary).build();
     }
 
     @DELETE
@@ -89,7 +86,8 @@ public class RCA_ItemResources extends Resource<RCA_Item> {
 
     @Override
     public Class<?> getModel() {
-        return RCA_Item.class;
+        return Process_Catogary.class;
     }
 
 }
+

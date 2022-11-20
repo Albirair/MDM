@@ -4,9 +4,11 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
+import models.ModelBaseWithoutId;
+
 
 @Entity
-public class RCA_Item extends PanacheEntityBase{
+public class RCA_Item extends ModelBaseWithoutId{
     @Id 
     public int Item_id; 
     public String name;
@@ -36,4 +38,8 @@ public class RCA_Item extends PanacheEntityBase{
         this.related_process_id = related_process_id;
     }
 
+    @Override
+    public long getId() {
+        return Item_id;
+    }
 }

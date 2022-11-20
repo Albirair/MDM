@@ -2,11 +2,12 @@ package models.fault;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
+import models.ModelBaseWithoutId;
+
 
 @Entity
-public class RCA_Family extends PanacheEntityBase{
+public class RCA_Family extends ModelBaseWithoutId{
     @Id
     public int family_id; 
     public String name;
@@ -34,6 +35,11 @@ public class RCA_Family extends PanacheEntityBase{
         this.description = description;
         this.catogary = catogary;
         this.level = level;
+    }
+
+    @Override
+    public long getId() {
+        return family_id;
     }
 
 }

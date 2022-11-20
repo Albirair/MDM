@@ -2,13 +2,15 @@ package models.fault;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
 import java.util.Set;
+import models.ModelBaseWithoutId;
+
 
 
 @Entity
-public class Process_Catogary extends PanacheEntityBase{
+public class Process_Catogary extends ModelBaseWithoutId{
     @Id
     public int ProcessCatogary_id;
     public String name;
@@ -35,6 +37,11 @@ public class Process_Catogary extends PanacheEntityBase{
         this.related_CatogaryApp = related_CatogaryApp;
         // this.Related_ProcessCatogary = Related_ProcessCatogary;
         
+    }
+
+    @Override
+    public long getId() {
+        return ProcessCatogary_id;
     }
 
 }

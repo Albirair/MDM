@@ -2,14 +2,16 @@ package models.fault;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.Entity;
 import java.util.Set;
+import models.ModelBaseWithoutId;
+
 
 
 @Entity
-public class Process_Activity extends PanacheEntityBase{
+public class Process_Activity extends ModelBaseWithoutId{
     @Id
     public int processActivity_id;
     public String name;
@@ -41,6 +43,11 @@ public class Process_Activity extends PanacheEntityBase{
         this.description = description;
         // this.related_ActivityApp = related_ActivityApp;
         this.Related_ProcessTask =  Related_ProcessTask;
+    }
+
+    @Override
+    public long getId() {
+        return processActivity_id;
     }
 
 }

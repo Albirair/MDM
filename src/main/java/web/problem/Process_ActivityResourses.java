@@ -6,17 +6,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.*;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
-import models.fault.RCA_Class;
+import models.fault.Process_Activity;
 import web.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-@Path("api/rca")
+@Path("api/Process_Activity")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RcaResources extends Resource<RCA_Class> {
+public class Process_ActivityResourses extends Resource<Process_Activity> {
 
     @GET
     public List<?> list(@QueryParam("fields") String fields) {
@@ -30,31 +30,28 @@ public class RcaResources extends Resource<RCA_Class> {
         return super.retrieve(fields, id);
     }
 
-//     @POST
-//     @Transactional
-//     public Response create(RCA m) {
-//         return super.create(m);
-//     }
+    @POST
+    @Transactional
+    public Response create(Process_Activity m) {
+        return super.create(m);
+    }
 
-//     @PUT
-//     @Transactional
-//     @Path("{id}")
-//     public Response update(@PathParam int id, RCA model) {
+    @PUT
+    @Transactional
+    @Path("{id}")
+    public Response update(@PathParam int id, Process_Activity model) {
 
-//         RCA rca = RCA.findById(id);
-//         if (rca == null) {
-//             throw new WebApplicationException("RCA with this Id doesn't exsist! ", 404);
-//         }
-//         // rca.rca_id = model.rca_id;
-//         rca.name = model.name;
-//         rca.description = model.description;
-//         rca.related_process_id = model.related_process_id;
-//         rca.catogary = model.catogary;
-//         rca.level = model.level;
-//         rca.parent_id = model.parent_id;
-//         rca.persist();
-//         return Response.ok(rca).build();
-//     }
+        Process_Activity process_activity = Process_Activity.findById(id);
+        if (process_activity == null) {
+            throw new WebApplicationException("process activity with this Id doesn't exsist! ", 404);
+        }
+        // rca.rca_id = model.rca_id;
+        process_activity.name = model.name;
+        process_activity.description = model.description;
+        process_activity.Related_ProcessTask = model.Related_ProcessTask;
+        process_activity.persist();
+        return Response.ok(process_activity).build();
+    }
 
     @DELETE
     @Transactional
@@ -89,7 +86,7 @@ public class RcaResources extends Resource<RCA_Class> {
 
     @Override
     public Class<?> getModel() {
-        return RCA_Class.class;
+        return Process_Activity.class;
     }
 
 }

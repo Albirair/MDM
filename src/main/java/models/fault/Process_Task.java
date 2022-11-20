@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
 import java.util.Set;
+import models.ModelBaseWithoutId;
+
 
 
 @Entity
-public class Process_Task extends PanacheEntityBase{
+public class Process_Task extends ModelBaseWithoutId{
     @Id
     public int processTask_id;
     public String name;
@@ -36,4 +38,8 @@ public class Process_Task extends PanacheEntityBase{
         // this.Related_ProcessTask = Related_ProcessTask;
     }
 
+    @Override
+    public long getId() {
+        return processTask_id;
+    }
 }
