@@ -29,9 +29,9 @@ public class Process_Activity extends ModelBaseWithoutId{
     @JsonBackReference(value = "Related_ProcessActivity")
     public Set<Process> Related_ProcessActivity;
 
-    @ManyToOne
+    @OneToMany
     @JsonBackReference(value = "Related_ProcessTask")
-    public Process_Task Related_ProcessTask;
+    public Set <Process_Task> Related_ProcessTask;
 
     public Process_Activity() {
     }
@@ -42,7 +42,7 @@ public class Process_Activity extends ModelBaseWithoutId{
         this.name = name;
         this.description = description;
         // this.related_ActivityApp = related_ActivityApp;
-        this.Related_ProcessTask =  Related_ProcessTask;
+        // this.Related_ProcessTask =  Related_ProcessTask;
     }
 
     @Override

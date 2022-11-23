@@ -22,7 +22,8 @@ public class Process_Task extends ModelBaseWithoutId{
     @JsonBackReference(value = "related_TaskApp")
     public Application related_TaskApp;
 
-    @OneToMany(mappedBy = "Related_ProcessTask", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(mappedBy = "Related_ProcessTask", cascade = CascadeType.ALL)
+    // @JoinColumn
 	@JsonManagedReference(value = "Related_ProcessTask")
     public Set <Process_Activity> Related_ProcessTask;
 

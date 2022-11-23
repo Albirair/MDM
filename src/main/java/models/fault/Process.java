@@ -22,14 +22,13 @@ public class Process extends ModelBaseWithoutId{
     // public Application related_Process_app;
     public Set<Application> related_Process_app;
 
-    @ManyToOne
-    @JoinColumn
+    @OneToMany
     @JsonBackReference(value = "Related_ProcessCatogary")
-    public Process_Catogary Related_ProcessCatogary;
+    public Set <Process_Catogary> Related_ProcessCatogary;
 
-    @ManyToOne
+    @OneToMany
     @JsonBackReference(value = "Related_ProcessActivity")
-    public Process_Activity Related_ProcessActivity;
+    public Set <Process_Activity> Related_ProcessActivity;
 
 
 
@@ -43,9 +42,9 @@ public class Process extends ModelBaseWithoutId{
         this.process_id = process_id;
         this.name = name;
         this.description = description;
-        this.Related_ProcessActivity = Related_ProcessActivity;
+        // this.Related_ProcessActivity = Related_ProcessActivity;
         this.related_process_id = related_process_id;
-        this.Related_ProcessCatogary =  Related_ProcessCatogary;
+        // this.Related_ProcessCatogary =  Related_ProcessCatogary;
 
     }
 

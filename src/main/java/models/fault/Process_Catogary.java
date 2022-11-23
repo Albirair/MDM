@@ -17,9 +17,10 @@ public class Process_Catogary extends ModelBaseWithoutId{
     public String description;
     public String Process_framework; //eTOM , PCF
     // Primary Key:
-    @OneToMany
+    @ManyToOne
+    @JoinColumn
     @JsonBackReference(value = "Related_ProcessCatogary")
-    public Set <Process> Related_ProcessCatogary;
+    public Process Related_ProcessCatogary;
     // Forign Key:
     @ManyToOne
     @JoinColumn
