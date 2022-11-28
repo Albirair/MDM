@@ -3,11 +3,10 @@ package models.fault;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
 import java.util.Set;
 import models.ModelBaseWithoutId;
-
 
 
 @Entity

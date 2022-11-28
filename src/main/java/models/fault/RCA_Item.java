@@ -2,7 +2,7 @@ package models.fault;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+// import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
 import models.ModelBaseWithoutId;
 
@@ -21,13 +21,13 @@ public class RCA_Item extends ModelBaseWithoutId{
     public RCA_Class ItemClass_id;
     @ManyToOne
     @JoinColumn
-    @JsonBackReference(value = "related_process_id")
-    public Process related_process_id;
+    @JsonBackReference(value = "related_processActivity_id")
+    public Process_Activity related_processActivity_id;
 
     public RCA_Item() {
     }
 
-    public RCA_Item(int Item_id, String name, String description, String catogary, int level, RCA_Class ItemClass_id, Process related_process_id) {
+    public RCA_Item(int Item_id, String name, String description, String catogary, int level, RCA_Class ItemClass_id, Process_Activity related_processActivity_id) {
 
         this.Item_id = Item_id;
         this.name = name;
@@ -35,7 +35,7 @@ public class RCA_Item extends ModelBaseWithoutId{
         this.catogary = catogary;
         this.level = level;
         this.ItemClass_id = ItemClass_id;
-        this.related_process_id = related_process_id;
+        this.related_processActivity_id = related_processActivity_id;
     }
 
     @Override

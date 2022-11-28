@@ -17,8 +17,8 @@ public class Process_Activity extends ModelBaseWithoutId{
     public String name;
     public String description;
     // Primary Key:
-    // @OneToOne(mappedBy = "Related_ProcessTask")
-    // public Process_Task Related_ProcessTask;
+    @OneToOne(mappedBy = "related_processActivity_id")
+    public RCA_Item related_processActivity_id;
     
     // Forign Key:
     @OneToMany(mappedBy = "Related_ProcessCatogary", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -36,12 +36,12 @@ public class Process_Activity extends ModelBaseWithoutId{
     public Process_Activity() {
     }
 
-    public Process_Activity(int processActivity_id, String name, String description, Application related_ActivityApp, Process_Task Related_ProcessTask ) {
+    public Process_Activity(int processActivity_id, String name, String description, Application related_ActivityApp, Process_Task Related_ProcessTask, RCA_Item related_processActivity_id ) {
 
         this.processActivity_id = processActivity_id;
         this.name = name;
         this.description = description;
-        // this.related_ActivityApp = related_ActivityApp;
+        this.related_processActivity_id = related_processActivity_id;
         // this.Related_ProcessTask =  Related_ProcessTask;
     }
 

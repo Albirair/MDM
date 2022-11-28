@@ -5,9 +5,8 @@ import javax.persistence.*;
 
 @Entity
 public class Block_Hay extends PanacheEntity{
-
-    public String state;
     public String name;
+    public String code;
     // Forign Key:
     @OneToOne
     @JoinColumn(name = "locality")
@@ -21,10 +20,11 @@ public class Block_Hay extends PanacheEntity{
     public Block_Hay() {
     }
 
-    public Block_Hay( String state, String name, Locality locality) {
+    public Block_Hay(  String name, String code, Locality locality, GeographicAddress GeoAdd_BlockHay) {
 
-        this.state = state;
         this.name = name;
+        this.code = code;
         this.locality = locality;
+        this.GeoAdd_BlockHay = GeoAdd_BlockHay;
     }
 }
