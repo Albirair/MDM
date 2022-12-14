@@ -1,6 +1,7 @@
 
 package models.location;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.*;
 import java.util.Set;
@@ -18,8 +19,9 @@ public class Office extends PanacheEntity {
     public Set <Cluster> officeId_cluster;
     // Forign Key:
 
-    @OneToOne
-    @JoinColumn(name = "zone_office") // CHECK THIS RELATION !
+    @ManyToOne
+    @JoinColumn
+    @JsonBackReference(value = "zone_office")
     public Zone zone_office;
 
     @OneToOne
