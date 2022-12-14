@@ -10,7 +10,9 @@ public class HourPeriod extends PanacheEntity{
 
     public Date startHour;
     public Date endHour;
+    
     @OneToOne(mappedBy = "hourPeriod")
+    @JoinColumn
     public CalendarPeriod hourPeriod;
 
 

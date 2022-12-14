@@ -1,30 +1,28 @@
 package models.location;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.*;
+import java.util.Set;
+
 
 @Entity
 public class Locality extends PanacheEntity{
 
-    public String state;
     public String name;
+    public String code;
+    
     // Forign Key:
-    @OneToOne
-    @JoinColumn(name = "city")
-    public City city;
-    // @OneToOne(mappedBy = "locality")
-    // public Locality locality;
-    // Primary Key:
-    @OneToOne(mappedBy = "GeoAdd_Locality")
-    public GeographicAddress GeoAdd_Locality;
+    @OneToMany
+    @JsonManagedReference(value = "locality_state")
+    public Set <State> locality_state;
 
     public Locality() {
     }
 
-    public Locality( String state, String name, City city) {
+    public Locality( String code, String name) {
 
-        this.state = state;
         this.name = name;
-        this.city = city;
+        this.code = code;
     }
 }

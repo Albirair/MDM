@@ -1,6 +1,7 @@
 package models.location;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 
@@ -9,9 +10,11 @@ public class Cluster extends PanacheEntity{
 
     public String name;
     // Forign Key:
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "officeId_cluster")
+    @JsonBackReference(value = "officeId_cluster")
     public Office officeId_cluster;
+
     public Cluster() {
     }
 

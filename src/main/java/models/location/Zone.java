@@ -1,6 +1,7 @@
 package models.location;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+// import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 
@@ -9,10 +10,9 @@ public class Zone extends PanacheEntity{
 
     public String name;
     public String code;
-    // Primary Key:
-    @OneToOne(mappedBy = "zone_state")
-    public State zone_state;
-    @OneToOne(mappedBy = "zone_office")
+
+    @OneToOne(mappedBy = "zone_office") // MANY TO ONE!
+    @JoinColumn
     public Office zone_office;
 
     public Zone() {

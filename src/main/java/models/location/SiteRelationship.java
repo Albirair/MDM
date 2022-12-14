@@ -10,17 +10,15 @@ public class SiteRelationship extends PanacheEntity {
     public String href;
     public String type;
     public String role;
-    public String subUnitNumber;
 
     public SiteRelationship() {
     }
 
-    public SiteRelationship( String href, String type, String role, String subUnitNumber) {
+    public SiteRelationship( String href, String type, String role) {
 
         this.href = href;
         this.type = type;
         this.role = role;
-        this.subUnitNumber = subUnitNumber;
 
     }
 

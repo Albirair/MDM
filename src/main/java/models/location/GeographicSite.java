@@ -21,6 +21,7 @@ public class GeographicSite extends ModelBase {
     public String schemaLocation;
     // primary key:
     @OneToOne(mappedBy = "GeoSite_SiteRole")
+    @JoinColumn
     public Site_Role GeoSite_SiteRole;
     // Forign key:
     @OneToOne

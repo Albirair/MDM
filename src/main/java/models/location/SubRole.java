@@ -1,5 +1,6 @@
 package models.location;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.*;
 
@@ -8,8 +9,10 @@ import javax.persistence.*;
 public class SubRole extends PanacheEntity{
 
     public String name;
-    @OneToOne
+    
+    @ManyToOne
     @JoinColumn(name = "Role_SubRole")
+    @JsonBackReference(value = "Role_SubRole")
     public Role Role_SubRole;
 
     public SubRole() {

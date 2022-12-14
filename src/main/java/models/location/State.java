@@ -1,38 +1,61 @@
 package models.location;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
 
 @Entity
 public class State extends PanacheEntity{
 
-    public String name;
+    public String arabic_name;
+    public String english_name;
     public String code;
+    public String alternative_ar_name;
+    public String alternative_en_name;
+    public long population;
+    public long area;
+    public Date date_of_population_estimation;
+
+    
     // Primary Key:
-    @OneToOne(mappedBy = "City_state")
-    public City state;
-    @OneToOne(mappedBy = "GeoAdd_State")
-    public GeographicAddress GeoAdd_State;
-    @OneToOne(mappedBy = "GeoAdd_office")
-    public Office GeoAdd_office;
+    @OneToMany
+    @JsonManagedReference(value = "settlement_state")
+    public Set <Settlement> settlement_state;
 
     // Forign Key:
-    @OneToOne
-    @JoinColumn(name = "State_country")
-    public Country State_country;
-    @OneToOne
-    @JoinColumn(name = "zone_state")
-    public Zone zone_state;
+    @ManyToOne
+    @JoinColumn
+    @JsonBackReference(value = "state_country")
+    public Country state_country;
 
+    @ManyToOne
+    @JoinColumn
+    @JsonBackReference(value = "GeoAdd_State")
+    public GeographicAddress GeoAdd_State;
+
+    @ManyToOne
+    @JoinColumn
+    @JsonBackReference(value = "locality_state")
+    public Locality locality_state;
+  
 
     public State() {
     }
 
-    public State( String name, String code, Country State_country, Zone zone_state) {
+    public State( String arabic_name, String english_name, String code, String alternative_ar_name, String alternative_en_name, long population, long area, Date date_of_population_estimation, Country state_country) {
 
-        this.name = name;
+        this.arabic_name =  arabic_name;
+        this.english_name = english_name;
         this.code = code;
-        this.State_country = State_country;
-        this.zone_state = zone_state;
+        this.alternative_ar_name = alternative_ar_name;
+        this.alternative_en_name = alternative_en_name;
+        this.population = population;
+        this.area = area;
+        this.date_of_population_estimation = date_of_population_estimation;
+        this.state_country = state_country;
     }
 }

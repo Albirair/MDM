@@ -1,11 +1,15 @@
 package models.location;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.*;
 
 @Entity
 public class GeographicSubAddress extends PanacheEntity{
 
+    public String name;
+    public String label;
+    public String GLN_code;
     public String href;
     public String subAddressType;
     public String subUnitType;
@@ -18,15 +22,19 @@ public class GeographicSubAddress extends PanacheEntity{
     public String type;
     public String schemaLocation;
     // Forign Key:
-    @OneToOne
-    @JoinColumn(name = "GeographicAddressId")
-    public GeographicAddress GeographicAddress;
+    @ManyToOne 
+    @JoinColumn(name = "GeoAdd_GeoSubAdd")
+    @JsonBackReference(value = "GeoAdd_GeoSubAdd")
+    public GeographicAddress GeoAdd_GeoSubAdd;
 
     public GeographicSubAddress() {
     }
 
-    public GeographicSubAddress( String href, String subAddressType, String subUnitType, String subUnitNumber,String levelType, String levelNumber, String buildingName, String privateStreetName, String privateStreetNumber, String type, String schemaLocation) {
+    public GeographicSubAddress( String name, String label, String GLN_code, String href, String subAddressType, String subUnitType, String subUnitNumber,String levelType, String levelNumber, String buildingName, String privateStreetName, String privateStreetNumber, String type, String schemaLocation) {
 
+        this.name = name;
+        this.label = label;
+        this.GLN_code = GLN_code;
         this.href = href;
         this.subAddressType = subAddressType;
         this.subUnitType = subUnitType;

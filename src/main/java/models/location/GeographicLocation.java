@@ -14,26 +14,28 @@ public class GeographicLocation extends ModelBase {
     public String spatialRef;
     public String type;
     public String schemaLocation;
+    
     // Forign Key:
     @OneToOne
-    @JoinColumn(name = "geometry")
-    public GeographicPoint geometry;
+    @JoinColumn(name = "GeoLoc_geoPoint")
+    public GeographicPoint GeoLoc_geoPoint;
     // Primary Key:
-    @OneToOne(mappedBy = "GeographicLocation")
-    public GeographicAddress GeographicAddress;
+    @OneToOne(mappedBy = "GeoAdd_geoLoca")
+    @JoinColumn
+    public GeographicAddress GeoAdd_geoLoca;
 
     public GeographicLocation() {
     }
 
     public GeographicLocation(String href, String name, String geometryType, String accuracy, String spatialRef,
-            GeographicPoint geometry, String type, String schemaLocation) {
+            GeographicPoint GeoLoc_geoPoint, String type, String schemaLocation) {
 
         this.href = href;
         this.name = name;
         this.geometryType = geometryType;
         this.accuracy = accuracy;
         this.spatialRef = spatialRef;
-        this.geometry = geometry;
+        this.GeoLoc_geoPoint = GeoLoc_geoPoint;
         this.type = type;
         this.schemaLocation = schemaLocation;
     }

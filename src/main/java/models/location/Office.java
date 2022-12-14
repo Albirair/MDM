@@ -1,8 +1,9 @@
 
 package models.location;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -10,13 +11,17 @@ public class Office extends PanacheEntity {
 
     public String name;
     public String address;
+    
     // Primary Key:
-    @OneToOne(mappedBy = "officeId_cluster")
-    public Cluster officeId_cluster;
+    @OneToMany
+    @JsonManagedReference(value = "officeId_cluster")
+    public Set <Cluster> officeId_cluster;
     // Forign Key:
+
     @OneToOne
-    @JoinColumn(name = "zone_office")
+    @JoinColumn(name = "zone_office") // CHECK THIS RELATION !
     public Zone zone_office;
+
     @OneToOne
     @JoinColumn(name = "GeoAdd_office")
     public GeographicAddress GeoAdd_office;

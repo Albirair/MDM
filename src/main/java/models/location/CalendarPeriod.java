@@ -10,7 +10,6 @@ public class CalendarPeriod extends PanacheEntity{
     public String day;
     public String timeZone;
     @OneToOne
-    @JoinColumn(name = "hourPeriod")
     public HourPeriod hourPeriod;
 
     public CalendarPeriod() {
