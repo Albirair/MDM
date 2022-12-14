@@ -18,6 +18,7 @@ public class Process_Activity extends ModelBaseWithoutId{
     public String description;
     // Primary Key:
     @OneToOne(mappedBy = "related_processActivity_id")
+    @JoinColumn
     public RCA_Item related_processActivity_id;
     
     // Forign Key:

@@ -15,7 +15,6 @@ public class Process extends ModelBaseWithoutId{
     public String description;
     // Forign Key:
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, mappedBy = "related_Process_app")
-    // public Application related_Process_app;
     public Set<Application> related_Process_app;
 
     @OneToMany
